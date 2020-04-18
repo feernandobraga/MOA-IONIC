@@ -4,11 +4,20 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
+  
+  <!-- iOS only header
+    <ion-header collapse="condense">
+    <ion-toolbar color="primary" background="primary">
+      <ion-title size="large">News</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
   <ion-grid class="ion-no-padding">
     
     <ion-row *ngFor="let singleNews of loadedNews">
-      <ion-col size="12" class="ion-no-padding">
+      <ion-col size="12" class="">
         
         <ion-card id="news-card">
           <ion-card-header>
@@ -18,6 +27,16 @@
           <ion-card-content>
             {{ singleNews.description }}
           </ion-card-content>
+
+          <div class="ion-text-right ion-margin">
+            <ion-button size="small"
+              color="primary" 
+              [routerLink]="['/', 'main', 'tabs', 'news', singleNews.id]"
+              routerDirection="forward">
+              SHOW MORE
+            </ion-button>
+          </div>
+
         </ion-card>
         
       </ion-col>

@@ -10,7 +10,16 @@ const routes: Routes = [
     children: [
       { // All routers for news
         path: 'news',
-        loadChildren: () => import('./news/news.module').then(m => m.NewsPageModule)
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./news/news.module').then(m => m.NewsPageModule)
+          },
+          {
+            path: ':newsId',
+            loadChildren: () => import('./news/news-detail/news-detail.module').then(m => m.NewsDetailPageModule)
+          }
+        ]
       },
       { // All routes for trips
         path: 'events',

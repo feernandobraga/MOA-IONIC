@@ -36,4 +36,9 @@ export class NewsService {
     return [...this._news]
   }
 
+  getSingleNews(id: string){
+    return {...this._news.find(n => n.id === id)}
+
+  }
+
 }
