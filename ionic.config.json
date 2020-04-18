@@ -1,0 +1,7 @@
+{
+  "name": "MOA",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
