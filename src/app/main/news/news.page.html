@@ -1,9 +1,27 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>news</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>News</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-grid class="ion-no-padding">
+    
+    <ion-row *ngFor="let singleNews of loadedNews">
+      <ion-col size="12" class="ion-no-padding">
+        
+        <ion-card id="news-card">
+          <ion-card-header>
+            <ion-card-subtitle>{{ singleNews.author}} - {{ singleNews.date }}</ion-card-subtitle>
+            <ion-card-title>{{ singleNews.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ singleNews.description }}
+          </ion-card-content>
+        </ion-card>
+        
+      </ion-col>
+    </ion-row>
+  
+  </ion-grid>
 </ion-content>
