@@ -19,16 +19,20 @@
           <ion-card-header color="primary" class="header-border">
             <ion-card-title class="ion-text-center">{{ loadedEvent.title }}</ion-card-title>
 
-            <ion-row class="">
-              <ion-col size="" class="">
-                <ion-card-subtitle class="ion-padding">{{ loadedEvent.address}}</ion-card-subtitle>
-              </ion-col>
-              <ion-col size="" class="ion-text-right">
+            <ion-row>
+              <ion-col size="" class="ion-text-center">
                 <ion-card-subtitle class="ion-padding">{{ loadedEvent.date}}</ion-card-subtitle>
               </ion-col>
             </ion-row>
+
+            <ion-row class="">
+              <ion-col size="" class="">
+                <ion-card-subtitle class="">Address: {{ loadedEvent.address}}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
             
-            <ion-row class="ion-justify-content-center">
+            <ion-row class="">
               <ion-card-subtitle class="ion-text-center">Meeting Point: {{ loadedEvent.meetingPoint }}</ion-card-subtitle>
             </ion-row>
 
@@ -39,12 +43,17 @@
           </ion-card-header>
           <ion-card-content class="ion-margin-top">
             
-            <h2>{{ loadedEvent.description }}</h2>
+            <h2 class="ion-margin-bottom">{{ loadedEvent.description }}</h2>
           </ion-card-content>
 
-          <ion-button color="tertiary" expand="full">
+          <ion-button *ngIf="(loadedEvent.isRsvpd === false)" class="ion-margin-top" color="tertiary" expand="full" (click)="confirmRsvp()">
             <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
             RSVP!
+          </ion-button>
+
+          <ion-button *ngIf="(loadedEvent.isRsvpd === true)" class="ion-margin-top" color="danger" expand="full" (click)="cancelRsvp()">
+            <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+            Cancel Reservation
           </ion-button>
 
         </ion-card>

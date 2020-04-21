@@ -9,32 +9,35 @@ export class EventsService {
   constructor() { }
 
   private _events: Events[] = [
-    new Events(
-      'e1',
-      'Monthly General Meetings',
-      'Not you average meeting...',
-      '06/05/2020',
-      "Vintage Driver's Club",
-      "41 Norcal Road"
-    ),
+    {
+      id:'e1',
+      title: 'Monthly General Meetings',
+      description: 'Not you average meeting...',
+      date: '06/05/2020 - 7:30 PM',
+      meetingPoint:"Vintage Driver's Club",
+      address: "41 Norcal Road",
+      isRsvpd: false
+    },
 
-    new Events(
-      'e2',
-      'Mokes at the Movies',
-      'Popcorn and Netflix all night along',
-      '07/06/2020',
-      'St. Kilda Pier',
-      '123, St. Kilda Road'
-    ),
+    {
+      id:'e2',
+      title: 'Mokes at the Movies',
+      description: 'Popcorn and Netflix all night along',
+      date: '07/06/2020 - 13:00 PM',
+      meetingPoint:'St. Kilda Pier',
+      address: '123, St. Kilda Road',
+      isRsvpd: false
+    },
 
-    new Events(
-      'e3',
-      'Northern Lights Tour',
-      'Bring you sunnies',
-      '08/07/2020',
-      'Eureka Tower',
-      '33, Southbank Blv'
-    )
+    {
+      id:'e3',
+      title: 'Northern Lights Tour',
+      description: 'Bring you sunnies',
+      date: '08/07/2020 - 5:00 AM',
+      meetingPoint:'Eureka Tower',
+      address: '33, Southbank Blv',
+      isRsvpd: false
+    }
   ]
 
   get allEvents(){
@@ -45,5 +48,30 @@ export class EventsService {
     return {...this._events.find(e => e.id === id)}
   }
 
+  toggleRSVP(id:string, value: boolean){
+    console.log("entering methods")
+    const arrayIndex = this._events.findIndex(e => e.id === id)
+    // console.log("index is " + arrayIndex)
+    this._events[arrayIndex].isRsvpd = value
+    console.log("new value" + this._events[arrayIndex])
+    
+    // this._events.find(e => {
+    //   return e.id === id})
+    
+  }
+
+  // set isRsvpd(value: boolean){
+  //   this._events[].isRsvpd = value
+  // }
+
+  // public confirmRSVP(id: number, value: boolean){
+  //   this._events[id].isRsvpd = value
+  // }
+
+  // set isRsvpd(value: boolean) {
+  //   this._events. = value
+  // }
+
+  
 
 }
