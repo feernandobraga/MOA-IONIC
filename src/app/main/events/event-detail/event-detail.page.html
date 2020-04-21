@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/main/tabs/events"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Event</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid class="ion-no-border ion-no-margin ion-no-padding">
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-card class="ion-no-border ion-no-margin ion-no-padding">
+          <ion-card-header color="primary" class="header-border">
+            <ion-card-title class="ion-text-center">{{ loadedEvent.title }}</ion-card-title>
+
+            <ion-row class="">
+              <ion-col size="" class="">
+                <ion-card-subtitle class="ion-padding">{{ loadedEvent.address}}</ion-card-subtitle>
+              </ion-col>
+              <ion-col size="" class="ion-text-right">
+                <ion-card-subtitle class="ion-padding">{{ loadedEvent.date}}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row class="ion-justify-content-center">
+              <ion-card-subtitle class="ion-text-center">Meeting Point: {{ loadedEvent.meetingPoint }}</ion-card-subtitle>
+            </ion-row>
+
+            <!-- <ion-row>
+              <p>{{ loadedEvent.meetingPoint }}</p>
+            </ion-row> -->
+
+          </ion-card-header>
+          <ion-card-content class="ion-margin-top">
+            
+            <h2>{{ loadedEvent.description }}</h2>
+          </ion-card-content>
+
+          <ion-button color="tertiary" expand="full">
+            <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+            RSVP!
+          </ion-button>
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

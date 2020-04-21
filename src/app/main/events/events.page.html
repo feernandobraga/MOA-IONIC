@@ -1,9 +1,44 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>events</ion-title>
+  <ion-toolbar color="primary" class="header-border">
+    <ion-title>Events</ion-title>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
 
+  <!-- iOS only header
+    <ion-header collapse="condense">
+    <ion-toolbar color="primary" background="primary">
+      <ion-title size="large">News</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <ion-grid class="ion-no-padding">
+
+    <ion-row *ngFor="let event of loadedEvents">
+      <ion-col size="12" class="">
+
+        <ion-card id="news-card">
+          <ion-card-header>
+            <ion-card-title>{{ event.title }}</ion-card-title>
+            <ion-card-subtitle>{{ event.address }} - {{ event.date }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            {{ event.description }}
+          </ion-card-content>
+
+          <div class="ion-text-right ion-margin">
+            <ion-button size="small" color="primary" [routerLink]="['/', 'main', 'tabs', 'events', event.id]"
+              routerDirection="forward">
+              SHOW MORE
+            </ion-button>
+          </div>
+
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
 </ion-content>
