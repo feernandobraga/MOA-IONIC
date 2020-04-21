@@ -49,11 +49,9 @@ export class EventsService {
   }
 
   toggleRSVP(id:string, value: boolean){
-    console.log("entering methods")
     const arrayIndex = this._events.findIndex(e => e.id === id)
     // console.log("index is " + arrayIndex)
     this._events[arrayIndex].isRsvpd = value
-    console.log("new value" + this._events[arrayIndex])
     
     // this._events.find(e => {
     //   return e.id === id})

@@ -43,7 +43,7 @@
           </ion-card-header>
           <ion-card-content class="ion-margin-top">
             
-            <h2 class="ion-margin-bottom">{{ loadedEvent.description }}</h2>
+            <h2>{{ loadedEvent.description }}</h2>
           </ion-card-content>
 
           <ion-button *ngIf="(loadedEvent.isRsvpd === false)" class="ion-margin-top" color="tertiary" expand="full" (click)="confirmRsvp()">

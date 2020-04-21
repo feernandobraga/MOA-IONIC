@@ -29,12 +29,26 @@
             {{ event.description }}
           </ion-card-content>
 
-          <div class="ion-text-right ion-margin">
-            <ion-button size="small" color="primary" [routerLink]="['/', 'main', 'tabs', 'events', event.id]"
-              routerDirection="forward">
-              SHOW MORE
-            </ion-button>
-          </div>
+          
+          <ion-row class="ion-align-items-center">
+            <ion-col class="ion-text-left ion-margin align-self-center">
+              <ion-chip *ngIf="event.isRsvpd" color="tertiary" class="ion-text-left">
+                <ion-label>RSVP'd</ion-label>
+              </ion-chip>
+            </ion-col>
+
+            <ion-col>
+              <div class="ion-text-right ion-margin align-self-center">
+                <ion-button size="small" color="primary" [routerLink]="['/', 'main', 'tabs', 'events', event.id]"
+                  routerDirection="forward">
+                  SHOW MORE
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+            
+            
 
         </ion-card>
 
