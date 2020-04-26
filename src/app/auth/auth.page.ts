@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-auth',
@@ -8,6 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.page.scss'],
 })
 export class AuthPage implements OnInit {
+
+  isLoginMode: boolean = true
 
   constructor(
     private _authService: AuthService,
@@ -20,7 +23,16 @@ export class AuthPage implements OnInit {
   onLogin(){
     console.log("login")
     this._authService.login()
-    this._router.navigateByUrl('/main/tabs/news')
+    // this._router.navigateByUrl('/main/tabs/news')
+  }
+
+  onSwitchAuthMode(){
+    this.isLoginMode = !this.isLoginMode
+  }
+
+  onSubmit(form: NgForm){
+    console.log(form)
+
   }
 
 }

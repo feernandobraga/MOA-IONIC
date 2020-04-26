@@ -16,6 +16,24 @@
 
   <ion-grid class="ion-no-padding">
 
+    <ion-row class="ion-no-margin">
+      <ion-col size="10" offset="1">
+    
+        <!-- 
+                Segment options at the top of the page 
+                Each ion-segment-button gets a value that works similar to an identifier.
+                The ion-segment has also a value property which will indicate which menu will be active by default
+                The component also implements an ionic-native-event (ionChange) that handles the change and passes an event through
+              -->
+        <ion-segment value="upcomingEvents" (ionChange)="onFilterUpdate($event)" background="primary">
+          <ion-segment-button value="upcomingEvents">Upcoming Events</ion-segment-button>
+          <ion-segment-button value="pastEvents">Past Events</ion-segment-button>
+        </ion-segment>
+    
+      </ion-col>
+    </ion-row>
+
+
     <ion-row *ngFor="let event of loadedEvents">
       <ion-col size="12" class="">
 

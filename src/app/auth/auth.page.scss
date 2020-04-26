@@ -1,3 +1,17 @@
 #login-button{
-    margin-top: 20vh;
+    margin-top: 0.3em;
+}
+
+#switch-button{
+    margin-top: 1em;
+}
+
+// .ion-invalid.ion-touched ion-label{
+//     color: var(--ion-color-danger);
+// }
+
+.invalid-feedback{
+    color: var(--ion-color-danger);
+    font-size: smaller;
+    font-style: italic;
 }

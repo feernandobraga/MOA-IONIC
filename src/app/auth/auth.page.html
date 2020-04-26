@@ -1,23 +1,124 @@
 <ion-header>
   <ion-toolbar color="primary" class="header-border">
-    <ion-title>Authentication</ion-title>
+    <ion-title>{{isLoginMode ? 'LOGIN' : 'SIGN UP'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="" >
   
-  <ion-grid class="ion-no-border ion-no-margin ion-no-padding">
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12">
-        <ion-button id="login-button" color="tertiary" expand="full" class="ion-align-items-center ion-no-border" (click)="onLogin()">
-          LOGIN
-        </ion-button>
-      </ion-col>
-      
-    </ion-row>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+    <ion-grid>
     
-  </ion-grid>
+      <ion-row *ngIf="!isLoginMode">
+        <ion-col>
+    
+          <ion-item>
+            <ion-label position="floating">Membership Number</ion-label>
+            <ion-input type="text"
+              ngModel 
+              name="membership-number"
+              required
+              #membershipControl="ngModel"
+            >
+            </ion-input>
+          </ion-item>
+          
+          <ion-item *ngIf="membershipControl.invalid && membershipControl.touched" lines="none">
+            <ion-label class="invalid-feedback">
+              You must enter a valid membership number
+            </ion-label>
+          </ion-item>
+    
+        </ion-col>
+      </ion-row>
+    
+      <ion-row>
+        <ion-col size="">
+    
+          <ion-item>
+            <ion-label position="floating">E-mail</ion-label>
+            <ion-input type="email"
+              ngModel
+              name="email"
+              required
+              email
+              #emailControl="ngModel"
+            >
+            </ion-input>
+          </ion-item>
+          
+          <ion-item *ngIf="emailControl.invalid && emailControl.touched" lines="none">
+            <ion-label class="invalid-feedback">
+              You must enter a valid e-mail address
+            </ion-label>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="">
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input type="password"
+              ngModel
+              name="password"
+              required
+              minlength="6"
+              #passwordControl="ngModel"
+            >
+            </ion-input>
+            
+          </ion-item>
+          
+          <ion-item *ngIf="passwordControl.invalid && passwordControl.touched" lines="none">
+            <ion-label class="invalid-feedback">
+              Your password must have at least 6 characters
+            </ion-label>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="">
+          
+            <ion-button id="switch-button" 
+              expand="block" 
+              fill="clear" 
+              shape="round" 
+              color="tertiary" 
+              (click)="onSwitchAuthMode()"
+            >
+              Switch to {{isLoginMode ? 'Sign Up' : 'Login'}}
+            </ion-button>
+          
+        </ion-col>
+      </ion-row>
+    
+    </ion-grid>
   
+    <ion-grid class="ion-no-border ion-no-margin ion-no-padding">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12">
+          <ion-button id="login-button" 
+            color="tertiary" 
+            type="submit"
+            expand="full" 
+            class="ion-align-items-center ion-no-border" 
+            (click)="onLogin()"
+            [disabled]="f.invalid"
+          >
+            {{isLoginMode ? 'LOGIN' : 'SIGN UP'}}
+          </ion-button>
+        </ion-col>
+        
+      </ion-row>
+      
+    </ion-grid>
+    
+  </form>
 
-
+  {{f.value | json}}
 </ion-content>
