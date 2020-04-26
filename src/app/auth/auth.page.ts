@@ -31,8 +31,20 @@ export class AuthPage implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    console.log(form)
+    if (form.invalid) {
+      return
+    }
 
+    const membershipNumber = form.value.membershipNumber
+    const email = form.value.email;
+    const password = form.value.password;
+
+    if (this.isLoginMode){
+      console.log(email, +' '+ password)
+    } else {
+      console.log(membershipNumber)
+    }
+    
   }
 
 }

@@ -17,7 +17,7 @@
             <ion-label position="floating">Membership Number</ion-label>
             <ion-input type="text"
               ngModel 
-              name="membership-number"
+              name="membershipNumber"
               required
               #membershipControl="ngModel"
             >
@@ -74,7 +74,7 @@
           
           <ion-item *ngIf="passwordControl.invalid && passwordControl.touched" lines="none">
             <ion-label class="invalid-feedback">
-              Your password must have at least 6 characters
+              Password must have at least 6 characters
             </ion-label>
           </ion-item>
 
@@ -113,9 +113,7 @@
             {{isLoginMode ? 'LOGIN' : 'SIGN UP'}}
           </ion-button>
         </ion-col>
-        
       </ion-row>
-      
     </ion-grid>
     
   </form>
