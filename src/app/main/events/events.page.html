@@ -40,7 +40,7 @@
         <ion-card id="news-card">
           <ion-card-header>
             <ion-card-title>{{ event.title }}</ion-card-title>
-            <ion-card-subtitle class="ion-margin-top">{{ event.date }}</ion-card-subtitle>
+            <ion-card-subtitle class="ion-margin-top">{{ event.date | date:'dd/MMM/yyyy - hh:mm:a' }}</ion-card-subtitle>
             <ion-card-subtitle>{{ event.address }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>

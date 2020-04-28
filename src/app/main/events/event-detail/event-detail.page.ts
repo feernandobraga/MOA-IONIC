@@ -11,7 +11,8 @@ import { Events } from '../events.model';
 })
 export class EventDetailPage implements OnInit {
 
-  loadedEvent: Events
+  loadedEvent: Events;
+  today = new Date();
 
   constructor(
     private _router: Router,

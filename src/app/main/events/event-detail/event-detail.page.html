@@ -21,7 +21,7 @@
 
             <ion-row>
               <ion-col size="" class="ion-text-center">
-                <ion-card-subtitle class="ion-padding">{{ loadedEvent.date}}</ion-card-subtitle>
+                <ion-card-subtitle class="ion-padding">{{ loadedEvent.date | date:'dd/MMM/yyyy - hh:mm:a'}}</ion-card-subtitle>
               </ion-col>
             </ion-row>
 
@@ -46,15 +46,17 @@
             <h2>{{ loadedEvent.description }}</h2>
           </ion-card-content>
 
-          <ion-button *ngIf="(loadedEvent.isRsvpd === false)" class="ion-margin-top" color="tertiary" expand="full" (click)="confirmRsvp()">
-            <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
-            RSVP!
-          </ion-button>
-
-          <ion-button *ngIf="(loadedEvent.isRsvpd === true)" class="ion-margin-top" color="danger" expand="full" (click)="cancelRsvp()">
-            <ion-icon slot="start" name="close-circle-outline"></ion-icon>
-            Cancel Reservation
-          </ion-button>
+          <div *ngIf="!(loadedEvent.date < today)" >
+            <ion-button *ngIf="(loadedEvent.isRsvpd === false)" class="ion-margin-top" color="tertiary" expand="full" (click)="confirmRsvp()">
+              <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+              RSVP!
+            </ion-button>
+  
+            <ion-button *ngIf="(loadedEvent.isRsvpd === true)" class="ion-margin-top" color="danger" expand="full" (click)="cancelRsvp()">
+              <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+              Cancel Reservation
+            </ion-button>
+          </div>
 
         </ion-card>
       </ion-col>
