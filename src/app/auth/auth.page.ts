@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-auth',
@@ -14,7 +15,8 @@ export class AuthPage implements OnInit {
 
   constructor(
     private _authService: AuthService,
-    private _router: Router
+    private _router: Router,
+    private _loadingController: LoadingController
     ) { }
 
   ngOnInit() {
@@ -23,7 +25,24 @@ export class AuthPage implements OnInit {
   onLogin(){
     console.log("login")
     this._authService.login()
-    // this._router.navigateByUrl('/main/tabs/news')
+
+    /*  The loading Controller is responsible for showing the loading screen. It yields a promise that I handled
+        with the .then() method. It gets the loading element and present it. After the timeout it dismiss the element 
+     */
+    this._loadingController.create({
+      keyboardClose: true,
+      message: "Loading...",
+      //duration: 1000
+    }).then(loadingElement => {
+      loadingElement.present()
+      
+      setTimeout(() => {
+        loadingElement.dismiss()
+        this._router.navigateByUrl('/main/tabs/news')
+      }, 1000);
+
+    })
+    
   }
 
   onSwitchAuthMode(){
@@ -41,6 +60,7 @@ export class AuthPage implements OnInit {
 
     if (this.isLoginMode){
       console.log(email, +' '+ password)
+      
     } else {
       console.log(membershipNumber)
     }

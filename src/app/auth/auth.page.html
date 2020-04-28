@@ -108,7 +108,7 @@
             expand="full" 
             class="ion-align-items-center ion-no-border" 
             (click)="onLogin()"
-            [disabled]="f.invalid"
+            [disabled]="!f.invalid"
           >
             {{isLoginMode ? 'LOGIN' : 'SIGN UP'}}
           </ion-button>
