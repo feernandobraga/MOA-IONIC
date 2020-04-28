@@ -55,14 +55,16 @@ export class AuthPage implements OnInit {
     }
 
     const membershipNumber = form.value.membershipNumber
+    const firstName = form.value.firstName
+    const lastName = form.value.lastName
     const email = form.value.email;
     const password = form.value.password;
 
     if (this.isLoginMode){
-      console.log(email, +' '+ password)
+      console.log(email +' '+ password)
       
     } else {
-      console.log(membershipNumber)
+      console.log(firstName +' '+  lastName + ' ' + membershipNumber)
     }
     
   }

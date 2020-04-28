@@ -41,7 +41,7 @@ export class EventsService {
 
     {
       id: 'e4',
-      title: 'After Pandemic Party',
+      title: 'After-Pandemic Party',
       description: 'We are planning a big party when all of this is over!',
       date: new Date('2020-05-11 00:00'),
       meetingPoint: 'Peter\'s House',

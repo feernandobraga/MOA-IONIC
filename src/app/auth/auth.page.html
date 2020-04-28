@@ -9,33 +9,87 @@
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
 
     <ion-grid>
-    
-      <ion-row *ngIf="!isLoginMode">
-        <ion-col>
-    
-          <ion-item>
-            <ion-label position="floating">Membership Number</ion-label>
-            <ion-input type="text"
-              ngModel 
-              name="membershipNumber"
-              required
-              #membershipControl="ngModel"
-            >
-            </ion-input>
-          </ion-item>
-          
-          <ion-item *ngIf="membershipControl.invalid && membershipControl.touched" lines="none">
-            <ion-label class="invalid-feedback">
-              You must enter a valid membership number
-            </ion-label>
-          </ion-item>
-    
-        </ion-col>
-      </ion-row>
-    
+      <div *ngIf="!isLoginMode">
+        
+        <!-- Membership Number -->
+        <ion-row>
+          <ion-col>
+            
+            <ion-item>
+              <ion-label position="floating">Membership Number</ion-label>
+              <ion-input type="text"
+                ngModel 
+                name="membershipNumber"
+                required
+                #membershipControl="ngModel"
+              >
+              </ion-input>
+            </ion-item>
+            <!-- Membership Validation -->
+            <ion-item *ngIf="membershipControl.invalid && membershipControl.touched" lines="none">
+              <ion-label class="invalid-feedback">
+                You must enter a valid membership number
+              </ion-label>
+            </ion-item>
+      
+          </ion-col>
+        </ion-row>
+
+        <!-- First Name -->
+        <ion-row>
+          <ion-col size="">
+
+            <ion-item>
+              <ion-label position="floating">First Name</ion-label>
+              <ion-input
+                type="text"
+                ngModel
+                name="firstName"
+                required
+                #firstName="ngModel"
+                minlength="2"
+                pattern="[a-zA-Z]+"
+              >
+              </ion-input>
+            </ion-item>
+
+            <!-- First Name Validation -->
+            <ion-item *ngIf="firstName.invalid && firstName.touched" lines="none">
+              <ion-label class="invalid-feedback">
+                You need to enter at least 2 letters
+              </ion-label>
+            </ion-item>
+
+          </ion-col>
+        </ion-row>
+
+        <!-- Last Name -->
+        <ion-row>
+          <ion-col size="">
+        
+            <ion-item>
+              <ion-label position="floating">Last Name</ion-label>
+              <ion-input type="text" ngModel name="lastName" required #lastName="ngModel" minlength="2" pattern="[a-zA-Z]+">
+              </ion-input>
+            </ion-item>
+        
+            <!-- Last Name Validation -->
+            <ion-item *ngIf="lastName.invalid && lastName.touched" lines="none">
+              <ion-label class="invalid-feedback">
+                You need to enter at least 2 letters
+              </ion-label>
+            </ion-item>
+        
+          </ion-col>
+        </ion-row>
+
+      </div>
+      
+      <!-- Email -->
       <ion-row>
         <ion-col size="">
-    
+          
+            
           <ion-item>
             <ion-label position="floating">E-mail</ion-label>
             <ion-input type="email"
@@ -44,10 +98,10 @@
               required
               email
               #emailControl="ngModel"
-            >
+              >
             </ion-input>
           </ion-item>
-          
+          <!-- Email validation -->
           <ion-item *ngIf="emailControl.invalid && emailControl.touched" lines="none">
             <ion-label class="invalid-feedback">
               You must enter a valid e-mail address
@@ -57,6 +111,7 @@
         </ion-col>
       </ion-row>
 
+      <!-- PASSWORD -->
       <ion-row>
         <ion-col size="">
           <ion-item>
@@ -71,7 +126,7 @@
             </ion-input>
             
           </ion-item>
-          
+          <!-- PASSWORD validation message -->
           <ion-item *ngIf="passwordControl.invalid && passwordControl.touched" lines="none">
             <ion-label class="invalid-feedback">
               Password must have at least 6 characters
@@ -81,6 +136,7 @@
         </ion-col>
       </ion-row>
 
+      <!-- Switch LOGIN / SIGNUP button -->
       <ion-row>
         <ion-col size="">
           
@@ -98,7 +154,7 @@
       </ion-row>
     
     </ion-grid>
-  
+    <!-- LOGIN button -->
     <ion-grid class="ion-no-border ion-no-margin ion-no-padding">
       <ion-row class="ion-justify-content-center">
         <ion-col size="12">
@@ -108,7 +164,7 @@
             expand="full" 
             class="ion-align-items-center ion-no-border" 
             (click)="onLogin()"
-            [disabled]="!f.invalid"
+            [disabled]="f.invalid"
           >
             {{isLoginMode ? 'LOGIN' : 'SIGN UP'}}
           </ion-button>
@@ -118,5 +174,5 @@
     
   </form>
 
-  {{f.value | json}}
+  <!-- {{f.value | json}} -->
 </ion-content>
