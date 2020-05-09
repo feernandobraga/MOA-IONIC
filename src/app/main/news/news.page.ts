@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { NewsService } from './news.service';
-import { News } from './news.model';
+import { Component, OnInit } from "@angular/core";
+import { NewsService } from "./news.service";
+import { News } from "./news.model";
 
 @Component({
-  selector: 'app-news',
-  templateUrl: './news.page.html',
-  styleUrls: ['./news.page.scss'],
+  selector: "app-news",
+  templateUrl: "./news.page.html",
+  styleUrls: ["./news.page.scss"],
 })
 export class NewsPage implements OnInit {
+  loadedNews: News[];
 
-  loadedNews: News[]
-
-  constructor(
-    private _newsService: NewsService
-  ) { }
+  constructor(private _newsService: NewsService) {}
 
   ngOnInit() {
-    this.loadedNews = this._newsService.news;
+    // this.loadedNews = this._newsService.news;
+    // this.loadedNews = [];
+    this._newsService.fetchNews().subscribe(
+      data => (this.loadedNews = data),
+      err => console.log(err)
+    );
   }
-
 }
