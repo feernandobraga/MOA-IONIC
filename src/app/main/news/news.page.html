@@ -29,7 +29,7 @@
         
         <ion-card id="news-card">
           <ion-card-header>
-            <ion-card-subtitle>{{ singleNews.member_id}} - {{ singleNews.created_at }}</ion-card-subtitle>
+            <ion-card-subtitle>{{ singleNews.publisher_first_name}} {{singleNews.publisher_last_name}} - {{ singleNews.created_at | date:'dd/MMM/yyyy - hh:mm a' }}</ion-card-subtitle>
             <ion-card-title>{{ singleNews.title }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>

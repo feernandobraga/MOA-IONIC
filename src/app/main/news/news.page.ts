@@ -17,6 +17,8 @@ export class NewsPage implements OnInit {
     // this.loadedNews = [];
     this._newsService.fetchNews().subscribe(
       data => (this.loadedNews = data),
+      // data => console.log(data),
+
       err => console.log(err)
     );
   }

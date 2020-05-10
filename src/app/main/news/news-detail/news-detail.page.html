@@ -11,7 +11,7 @@
 
 <ion-content >
 
-  <ion-grid class="ion-no-border ion-no-margin ion-no-padding">
+  <ion-grid *ngIf="loadedNews" class="ion-no-border ion-no-margin ion-no-padding">
     
     <ion-row>
       <ion-col size="12">
@@ -21,10 +21,10 @@
             
             <ion-row class="">
               <ion-col size="" class="">
-                <ion-card-subtitle class="ion-padding">{{ loadedNews.author}}</ion-card-subtitle>
+                <ion-card-subtitle class="ion-padding">{{ loadedNews.publisher_first_name}} {{loadedNews.publisher_last_name}}</ion-card-subtitle>
               </ion-col>
               <ion-col size="" class="ion-text-right">
-                <ion-card-subtitle class="ion-padding">{{ loadedNews.date}}</ion-card-subtitle>
+                <ion-card-subtitle class="ion-padding">{{ loadedNews.created_at | date:'dd/MMM/yyyy'}}</ion-card-subtitle>
               </ion-col>
             </ion-row>
 
