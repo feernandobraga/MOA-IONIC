@@ -48,7 +48,7 @@
                 required
                 #firstName="ngModel"
                 minlength="2"
-                pattern="[a-zA-Z]+"
+                pattern="[a-zA-Z\s]+"
               >
               </ion-input>
             </ion-item>
@@ -69,7 +69,7 @@
         
             <ion-item>
               <ion-label position="floating">Last Name</ion-label>
-              <ion-input type="text" ngModel name="lastName" required #lastName="ngModel" minlength="2" pattern="[a-zA-Z]+">
+              <ion-input type="text" ngModel name="lastName" required #lastName="ngModel" minlength="2" pattern="[a-zA-Z\s]+">
               </ion-input>
             </ion-item>
         
@@ -136,6 +136,7 @@
         </ion-col>
       </ion-row>
 
+
       <!-- Switch LOGIN / SIGNUP button -->
       <ion-row>
         <ion-col size="">
@@ -154,7 +155,7 @@
       </ion-row>
     
     </ion-grid>
-    <!-- LOGIN button -->
+    <!-- LOGIN/SIGNUP button -->
     <ion-grid class="ion-no-border ion-no-margin ion-no-padding">
       <ion-row class="ion-justify-content-center">
         <ion-col size="12">
@@ -163,8 +164,9 @@
             type="submit"
             expand="full" 
             class="ion-align-items-center ion-no-border" 
-            (click)="onLogin()"
+            
             [disabled]="f.invalid"
+            
           >
             {{isLoginMode ? 'LOGIN' : 'SIGN UP'}}
           </ion-button>

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Events } from "./events.model";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { Member } from "../../auth/member.model";
 
 @Injectable({
   providedIn: "root",
@@ -9,7 +10,7 @@ import { HttpClient } from "@angular/common/http";
 export class EventsService {
   private apiURL = "http://localhost:3000/api/v1/";
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient, private _member: Member) {}
 
   private _events: Events[] = [
     //   {

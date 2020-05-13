@@ -15,7 +15,7 @@
   </ion-header> -->
 
   <!-- If there is no news -->
-  <div *ngIf="loadedNews?.length == 0" class="ion-text-center ion-padding">
+  <div *ngIf="loadedNews?.length == 0 || !loadedNews" class="ion-text-center ion-padding">
     <p>There is no news posted here yet...</p>
     <p>Please come back later.</p>
   </div>
