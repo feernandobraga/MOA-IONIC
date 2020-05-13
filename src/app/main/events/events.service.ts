@@ -13,33 +13,6 @@ export class EventsService {
 
   private _events: Events[] = [
     //   {
-    //     id:'e1',
-    //     title: 'Monthly General Meetings',
-    //     description: 'Not you average meeting...',
-    //     date: new Date('2020-03-25 19:00'),
-    //     meetingPoint:"Vintage Driver's Club",
-    //     address: "41 Norcal Road",
-    //     isRsvpd: false
-    //   },
-    //   {
-    //     id:'e2',
-    //     title: 'Mokes at the Movies',
-    //     description: 'Popcorn and Netflix all night along',
-    //     date: new Date('2020-04-10 08:00'),
-    //     meetingPoint:'St. Kilda Pier',
-    //     address: '123, St. Kilda Road',
-    //     isRsvpd: false
-    //   },
-    //   {
-    //     id:'e3',
-    //     title: 'Northern Lights Tour',
-    //     description: 'Bring you sunnies',
-    //     date: new Date('2020-07-01 00:00'),
-    //     meetingPoint:'Eureka Tower',
-    //     address: '33, Southbank Blv',
-    //     isRsvpd: false
-    //   },
-    //   {
     //     id: 'e4',
     //     title: 'After-Pandemic Party',
     //     description: 'We are planning a big party when all of this is over!',
@@ -56,6 +29,10 @@ export class EventsService {
 
   fetchAllEvents(): Observable<Events[]> {
     return this._http.get<Events[]>(this.apiURL + "events");
+  }
+
+  fetchSingleEvent(id: string): Observable<Events> {
+    return this._http.get<Events>(this.apiURL + "events/" + id);
   }
 
   getEvent(id: string) {

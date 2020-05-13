@@ -11,7 +11,7 @@
 
 <ion-content>
 
-  <ion-grid class="ion-no-border ion-no-margin ion-no-padding">
+  <ion-grid *ngIf="loadedEvent" class="ion-no-border ion-no-margin ion-no-padding">
 
     <ion-row>
       <ion-col size="12">
@@ -21,7 +21,7 @@
 
             <ion-row>
               <ion-col size="" class="ion-text-center">
-                <ion-card-subtitle class="ion-padding">{{ loadedEvent.date | date:'dd/MMM/yyyy - hh:mm a'}}</ion-card-subtitle>
+                <ion-card-subtitle class="ion-padding">{{ loadedEvent.event_date_and_time | date:'dd/MMM/yyyy - hh:mm a'}}</ion-card-subtitle>
               </ion-col>
             </ion-row>
 
@@ -33,7 +33,7 @@
 
             
             <ion-row class="">
-              <ion-card-subtitle class="ion-text-center">Meeting Point: {{ loadedEvent.meetingPoint }}</ion-card-subtitle>
+              <ion-card-subtitle class="ion-text-center">Meeting Point: {{ loadedEvent.meeting_point }}</ion-card-subtitle>
             </ion-row>
 
             <!-- <ion-row>
@@ -46,8 +46,14 @@
             <h2>{{ loadedEvent.description }}</h2>
           </ion-card-content>
 
-          <div *ngIf="!(loadedEvent.date < today)" >
-            <ion-button *ngIf="(loadedEvent.isRsvpd === false)" class="ion-margin-top" color="tertiary" expand="full" (click)="confirmRsvp()">
+          <!-- If it is not a past event, show RSVP button -->
+          <p *ngIf="!isPastEvent">
+            Not past event
+          </p>
+
+
+          <div *ngIf="!isPastEvent" >
+            <ion-button *ngIf="(loadedEvent.isRsvpd === false || !loadedEvent.isRsvpd )" class="ion-margin-top" color="tertiary" expand="full" (click)="confirmRsvp()">
               <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
               RSVP!
             </ion-button>
