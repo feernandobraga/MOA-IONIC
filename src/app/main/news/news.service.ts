@@ -12,6 +12,10 @@ import { MemberService } from "../../auth/member.service";
 export class NewsService {
   // private apiURL = "https://moa.herokuapp.com/api/v1/";
   private apiURL = "http://localhost:3000/api/v1/";
+  private _memberEmail: string;
+  private _memberToken: string;
+  private headers = new HttpHeaders();
+  private _options;
 
   constructor(
     private _http: HttpClient,
@@ -30,32 +34,55 @@ export class NewsService {
     return { ...this._news.find(n => n.id === id) };
   }
 
-  fetchNews(): Observable<News[]> {
-    let email: string;
-    let authenticationToken: string;
-
-    this._memberService.retrieveMemberData().then(data => {
-      (email = data._email),
-        (authenticationToken = data._authenticationToken),
-        console.log(email, authenticationToken);
+  oldFetchNews() {
+    this._memberService.retrieveMemberData().then(memberInfo => {
+      this._memberEmail = memberInfo._email;
+      this._memberToken = memberInfo._authenticationToken;
+      return this._http.get<News[]>(this.apiURL + "news", {
+        headers: new HttpHeaders({
+          // "X-Member-Email": this._memberEmail,
+          // "X-Member-Token": this._memberToken,
+          "X-Member-Email": "fernando@moa.com",
+          "X-Member-Token": "JMeHnn6jkSYzJfY8LwHv",
+        }),
+      });
     });
 
-    const options = {
-      headers: new HttpHeaders({
-        "X-Member-Email": email,
-        "X-Member-Token": authenticationToken,
-      }),
-    };
+    // return this._http.get<News[]>(this.apiURL + "news", {
+    //   headers: new HttpHeaders({
+    //     "X-Member-Email": "fernando@moa.com",
+    //     "X-Member-Token": "JMeHnn6jkSYzJfY8LwHv",
+    //   }),
+    // });
 
-    // TODO: THE header is not getting the values for email and authenticationToken. It can be variable scope issue
-    console.log("Sending HEADER" + JSON.stringify(options, null, 2));
-    console.log("EMAIL AND AUTHENTICATIONTOKEN: " + email, authenticationToken);
+    // return this._http.get<News[]>(this.apiURL + "news");
 
-    return this._http.get<News[]>(this.apiURL + "news", options);
+    // console.log("Sending HEADER" + JSON.stringify(options, null, 2));
+    // console.log(
+    //   "EMAIL AND AUTHENTICATIONTOKEN: " + this._memberToken,
+    //   this._memberEmail
+    // );
+
     // return this._http.get<News[]>(this.apiURL + "news");
   }
 
-  fetchSingleNews(id: string): Observable<News> {
-    return this._http.get<News>(this.apiURL + "news/" + id);
+  fetchSingleNews(id: string, memberEmail: string, memberToken: string): Observable<News> {
+    return this._http.get<News>(this.apiURL + "news/" + id, {
+      headers: new HttpHeaders({
+        "X-Member-Email": memberEmail,
+        "X-Member-Token": memberToken
+      }),
+    });
+  }
+
+  fetchNews(memberEmail: string, memberToken: string): Observable<News[]> {
+    return this._http.get<News[]>(this.apiURL + "news", {
+      headers: new HttpHeaders({
+        "X-Member-Email": memberEmail,
+        "X-Member-Token": memberToken,
+        // "X-Member-Email": "fernando@moa.com",
+        // "X-Member-Token": "JMeHnn6jkSYzJfY8LwHv",
+      }),
+    });
   }
 }

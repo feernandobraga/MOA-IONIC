@@ -60,22 +60,22 @@ export class AuthPage implements OnInit {
 
     if (this.isLoginMode) {
       // if LOGIN mode: Post to API login and password
-      console.log("Login: " + email + " " + password);
+
       this._authService.login(email, password).subscribe(data => {
         console.log(
           "Data returned from login.subscribe: " + JSON.stringify(data, null, 4)
         );
-        console.log("Routing to main/tabs/news");
+
         this._router.navigateByUrl("/main/tabs/news");
       });
     } else {
-      console.log("Sign Up Mode");
+      // console.log("Sign Up Mode");
       this._authService
         .signUp(membershipNumber, firstName, lastName, email, password)
         .subscribe(data => {
-          console.log(data);
+          this._router.navigateByUrl("/main/tabs/news");
         });
     }
-    // form.reset();
+    //TODO: form.reset();
   }
 }

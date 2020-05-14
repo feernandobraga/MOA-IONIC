@@ -15,7 +15,7 @@
   </ion-header> -->
 
   <!-- If there is no news -->
-  <div *ngIf="loadedNews?.length == 0 || !loadedNews" class="ion-text-center ion-padding">
+  <div *ngIf="!loadedNews || loadedNews?.length == 0"  class="ion-text-center ion-padding">
     <p>There is no news posted here yet...</p>
     <p>Please come back later.</p>
   </div>
@@ -52,4 +52,9 @@
     </ion-row>
   
   </ion-grid>
+
+  <ion-button (click)="onLogout()" expand="block" fill="clear" shape="round">
+    Logout
+  </ion-button>
+
 </ion-content>

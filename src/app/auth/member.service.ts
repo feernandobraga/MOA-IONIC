@@ -11,12 +11,10 @@ export class MemberService {
   constructor() {}
 
   storeMemberData(member: Member) {
-    // console.log(
-    //   "member.service - storeMemberData() " + JSON.stringify(member, null, 2)
-    // );
-
     const memberDataAsString = JSON.stringify(member);
     Plugins.Storage.set({ key: this.storageKey, value: memberDataAsString });
+
+    console.log("****MEMBER ADDED TO STORAGE: " + memberDataAsString);
   }
 
   async retrieveMemberData() {
@@ -27,5 +25,9 @@ export class MemberService {
     // );
 
     return member;
+  }
+
+  retrieveMember() {
+    return Plugins.Storage.get({ key: this.storageKey });
   }
 }
