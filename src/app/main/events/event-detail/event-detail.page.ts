@@ -4,6 +4,7 @@ import { NavController, AlertController } from "@ionic/angular";
 import { EventsService } from "../events.service";
 import { Events } from "../events.model";
 import { MemberService } from "../../../auth/member.service";
+import { map, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-event-detail",
@@ -16,6 +17,10 @@ export class EventDetailPage implements OnInit {
   isPastEvent: boolean = false;
   private _memberEmail: string;
   private _memberToken: string;
+  private _memberID: string;
+  private _attendee: [];
+  isAlreadyAttending: boolean;
+  private _eventID: string;
 
   constructor(
     private _router: Router,
@@ -36,12 +41,36 @@ export class EventDetailPage implements OnInit {
       this._memberService.retrieveMemberData().then(resMember => {
         this._memberEmail = resMember._email;
         this._memberToken = resMember._authenticationToken;
-
+        this._memberID = resMember.id;
         this._eventsService
           .fetchSingleEvent(
             paramMap.get("eventId"),
             this._memberEmail,
             this._memberToken
+          )
+          .pipe(
+            tap((eventData: any) => {
+              this._eventID = eventData.id;
+              console.log("EVENT ID: " + this._eventID);
+
+              console.log("ARRAY OF ATTENDEES: ");
+              this._attendee = eventData.attendees;
+              console.log(this._attendee);
+              console.log("Im member number: " + this._memberID);
+              let found: any = this._attendee.find(
+                (element: any) => element.member_id === 9
+              );
+              if (found) {
+                console.log("MEMBER IS GOING TO THIS EVENT");
+                console.log("Attendance ID: " + found.id);
+
+                this.isAlreadyAttending = true;
+              } else {
+                console.log("MEMBER IS NOOOOTTTTT GOING TO THIS EVENT! ):");
+                this.isAlreadyAttending = false;
+              }
+              console.log(found);
+            })
           )
           .subscribe(data => {
             this.loadedEvent = data;

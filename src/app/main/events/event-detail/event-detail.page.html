@@ -53,12 +53,12 @@
 
 
           <div *ngIf="!isPastEvent" >
-            <ion-button *ngIf="(loadedEvent.isRsvpd === false || !loadedEvent.isRsvpd )" class="ion-margin-top" color="tertiary" expand="full" (click)="confirmRsvp()">
+            <ion-button *ngIf="(loadedEvent.isRsvpd === false || !isAlreadyAttending )" class="ion-margin-top" color="tertiary" expand="full" (click)="confirmRsvp()">
               <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
               RSVP!
             </ion-button>
   
-            <ion-button *ngIf="(loadedEvent.isRsvpd === true)" class="ion-margin-top" color="danger" expand="full" (click)="cancelRsvp()">
+            <ion-button *ngIf="(isAlreadyAttending)" class="ion-margin-top" color="danger" expand="full" (click)="cancelRsvp()">
               <ion-icon slot="start" name="close-circle-outline"></ion-icon>
               Cancel Reservation
             </ion-button>
