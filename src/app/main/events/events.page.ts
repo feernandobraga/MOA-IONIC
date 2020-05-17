@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { EventsService } from "./events.service";
 import { Events } from "./events.model";
 import { SegmentChangeEventDetail } from "@ionic/core";
+import { MemberService } from "../../auth/member.service";
 
 @Component({
   selector: "app-events",
@@ -13,22 +14,33 @@ export class EventsPage implements OnInit {
   loadedEvents: Events[];
   pastEvents: Events[];
   today = new Date();
+  private _memberEmail: string;
+  private _memberToken: string;
 
-  constructor(private _eventsService: EventsService) {}
+  constructor(
+    private _eventsService: EventsService,
+    private _memberService: MemberService
+  ) {}
 
   ngOnInit() {
-    this._eventsService.fetchAllEvents().subscribe(
-      eventData => {
-        console.log(eventData);
-        // this.loadedEvents = eventData
-        this.upcomingEvents = eventData;
-        this.pastEvents = eventData;
-        this.filterUpcoming();
-      },
-      err => {
-        console.log("Something went wrong when fetching events");
-      }
-    );
+    this._memberService.retrieveMemberData().then(resMember => {
+      this._memberEmail = resMember._email;
+      this._memberToken = resMember._authenticationToken;
+      this._eventsService
+        .fetchAllEvents(this._memberEmail, this._memberToken)
+        .subscribe(
+          eventData => {
+            console.log(eventData);
+            // this.loadedEvents = eventData
+            this.upcomingEvents = eventData;
+            this.pastEvents = eventData;
+            this.filterUpcoming();
+          },
+          err => {
+            console.log("Something went wrong when fetching events");
+          }
+        );
+    });
   }
 
   filterUpcoming() {

@@ -5,13 +5,15 @@ import { Observable } from "rxjs";
 import { map, switchMap, tap, take } from "rxjs/operators";
 import { Member } from "../../auth/member.model";
 import { MemberService } from "../../auth/member.service";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class NewsService {
   // private apiURL = "https://moa.herokuapp.com/api/v1/";
-  private apiURL = "http://localhost:3000/api/v1/";
+  // private apiURL = "http://localhost:3000/api/v1/";
+  private apiURL = environment.apiURL;
   private _memberEmail: string;
   private _memberToken: string;
   private headers = new HttpHeaders();
@@ -66,11 +68,15 @@ export class NewsService {
     // return this._http.get<News[]>(this.apiURL + "news");
   }
 
-  fetchSingleNews(id: string, memberEmail: string, memberToken: string): Observable<News> {
+  fetchSingleNews(
+    id: string,
+    memberEmail: string,
+    memberToken: string
+  ): Observable<News> {
     return this._http.get<News>(this.apiURL + "news/" + id, {
       headers: new HttpHeaders({
         "X-Member-Email": memberEmail,
-        "X-Member-Token": memberToken
+        "X-Member-Token": memberToken,
       }),
     });
   }

@@ -1,16 +1,17 @@
 import { Injectable } from "@angular/core";
 import { Events } from "./events.model";
 import { Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Member } from "../../auth/member.model";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class EventsService {
-  private apiURL = "http://localhost:3000/api/v1/";
+  private apiURL = environment.apiURL;
 
-  constructor(private _http: HttpClient, private _member: Member) {}
+  constructor(private _http: HttpClient) {}
 
   private _events: Events[] = [
     //   {
@@ -28,12 +29,42 @@ export class EventsService {
     return [...this._events];
   }
 
-  fetchAllEvents(): Observable<Events[]> {
-    return this._http.get<Events[]>(this.apiURL + "events");
+  fetchAllEvents(
+    memberEmail: string,
+    memberToken: string
+  ): Observable<Events[]> {
+    return this._http.get<Events[]>(this.apiURL + "events", {
+      headers: new HttpHeaders({
+        "X-Member-Email": memberEmail,
+        "X-Member-Token": memberToken,
+      }),
+    });
   }
 
-  fetchSingleEvent(id: string): Observable<Events> {
-    return this._http.get<Events>(this.apiURL + "events/" + id);
+  // fetchSingleNews(
+  //   id: string,
+  //   memberEmail: string,
+  //   memberToken: string
+  // ): Observable<News> {
+  //   return this._http.get<News>(this.apiURL + "news/" + id, {
+  //     headers: new HttpHeaders({
+  //       "X-Member-Email": memberEmail,
+  //       "X-Member-Token": memberToken,
+  //     }),
+  //   });
+  // }
+
+  fetchSingleEvent(
+    id: string,
+    memberEmail: string,
+    memberToken: string
+  ): Observable<Events> {
+    return this._http.get<Events>(this.apiURL + "events/" + id, {
+      headers: new HttpHeaders({
+        "X-Member-Email": memberEmail,
+        "X-Member-Token": memberToken,
+      }),
+    });
   }
 
   getEvent(id: string) {

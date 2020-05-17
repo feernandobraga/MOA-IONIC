@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { NavController, AlertController } from "@ionic/angular";
 import { EventsService } from "../events.service";
 import { Events } from "../events.model";
+import { MemberService } from "../../../auth/member.service";
 
 @Component({
   selector: "app-event-detail",
@@ -13,13 +14,16 @@ export class EventDetailPage implements OnInit {
   loadedEvent: Events;
   today = new Date();
   isPastEvent: boolean = false;
+  private _memberEmail: string;
+  private _memberToken: string;
 
   constructor(
     private _router: Router,
     private _activatedRouter: ActivatedRoute,
     private _navController: NavController,
     private _eventsService: EventsService,
-    private _alertController: AlertController
+    private _alertController: AlertController,
+    private _memberService: MemberService
   ) {}
 
   ngOnInit() {
@@ -29,19 +33,27 @@ export class EventDetailPage implements OnInit {
         return;
       }
 
-      this._eventsService
-        .fetchSingleEvent(paramMap.get("eventId"))
-        .subscribe(data => {
-          console.log(data);
-          this.loadedEvent = data;
-          if (new Date(this.loadedEvent.event_date_and_time) < this.today) {
-            this.isPastEvent = true;
-            console.log("Past event is true");
-          } else {
-            this.isPastEvent = false;
-            console.log("past event is false");
-          }
-        });
+      this._memberService.retrieveMemberData().then(resMember => {
+        this._memberEmail = resMember._email;
+        this._memberToken = resMember._authenticationToken;
+
+        this._eventsService
+          .fetchSingleEvent(
+            paramMap.get("eventId"),
+            this._memberEmail,
+            this._memberToken
+          )
+          .subscribe(data => {
+            this.loadedEvent = data;
+            if (new Date(this.loadedEvent.event_date_and_time) < this.today) {
+              this.isPastEvent = true;
+              console.log("Past event is true");
+            } else {
+              this.isPastEvent = false;
+              console.log("past event is false");
+            }
+          });
+      });
     });
   }
 

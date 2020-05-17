@@ -5,13 +5,14 @@ import { Member } from "./member.model";
 import { MemberService } from "./member.service";
 import { Router } from "@angular/router";
 import { NavController } from "@ionic/angular";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   private _userIsAuthenticated = false;
-  private apiURL = "http://localhost:3000/api/v1/";
+  private apiURL = environment.apiURL;
   apiResponse: any;
 
   constructor(

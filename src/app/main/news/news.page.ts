@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NewsService } from "./news.service";
 import { News } from "./news.model";
 import { MemberService } from "../../auth/member.service";
-import { AuthService } from "src/app/auth/auth.service";
+import { AuthService } from "../../auth/auth.service";
 
 @Component({
   selector: "app-news",

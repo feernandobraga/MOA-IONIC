@@ -34,6 +34,13 @@
     </ion-row>
 
 
+    <ion-row *ngIf="!loadedEvents">
+      <ion-col size="" class="ion-text-center">
+        <p>No events have been published yet, please come back latter.</p>
+      </ion-col>
+    </ion-row>
+
+
     <ion-row *ngFor="let event of loadedEvents">
       <ion-col size="12" class="">
 
