@@ -76,6 +76,6 @@ export class AuthPage implements OnInit {
           this._router.navigateByUrl("/main/tabs/news");
         });
     }
-    //TODO: form.reset();
+    form.reset();
   }
 }

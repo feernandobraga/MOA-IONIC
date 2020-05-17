@@ -27,7 +27,11 @@ export class MemberService {
     return member;
   }
 
-  retrieveMember() {
-    return Plugins.Storage.get({ key: this.storageKey });
+  // retrieveMember() {
+  //   return Plugins.Storage.get({ key: this.storageKey });
+  // }
+
+  destroyMemberData() {
+    Plugins.Storage.remove({ key: this.storageKey });
   }
 }

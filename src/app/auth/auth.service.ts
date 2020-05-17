@@ -60,7 +60,8 @@ export class AuthService {
 
   logout() {
     this._userIsAuthenticated = false;
-    this._navController.navigateBack("/auth");
+    this._memberService.destroyMemberData();
+    this._navController.navigateBack("auth");
   }
 
   signUp(
