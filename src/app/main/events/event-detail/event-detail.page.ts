@@ -21,6 +21,7 @@ export class EventDetailPage implements OnInit {
   private _attendee: [];
   isAlreadyAttending: boolean;
   private _eventID: string;
+  private _attendanceID: string;
 
   constructor(
     private _router: Router,
@@ -58,11 +59,12 @@ export class EventDetailPage implements OnInit {
               console.log(this._attendee);
               console.log("Im member number: " + this._memberID);
               let found: any = this._attendee.find(
-                (element: any) => element.member_id === 9
+                (element: any) => element.member_id === this._memberID
               );
               if (found) {
                 console.log("MEMBER IS GOING TO THIS EVENT");
-                console.log("Attendance ID: " + found.id);
+                this._attendanceID = found.id;
+                console.log("Attendance ID: " + this._attendanceID);
 
                 this.isAlreadyAttending = true;
               } else {
@@ -112,8 +114,26 @@ export class EventDetailPage implements OnInit {
           {
             text: "OK",
             handler: () => {
-              this._eventsService.toggleRSVP(this.loadedEvent.id, true);
-              this._navController.navigateBack(["/main/tabs/events"]);
+              console.log(
+                "RSVPING WITH THE FOLLOWING ARGUMENTS" + this._memberEmail,
+                this._memberToken,
+                this._memberID,
+                this._eventID
+              );
+
+              this._eventsService
+                .rsvpToEvent(
+                  this._memberEmail,
+                  this._memberToken,
+                  this._memberID,
+                  this._eventID
+                )
+                .pipe(
+                  tap(resData => {
+                    this._navController.navigateBack(["/main/tabs/events"]);
+                  })
+                )
+                .subscribe();
             },
           },
         ],
@@ -148,8 +168,18 @@ export class EventDetailPage implements OnInit {
           {
             text: "OK",
             handler: () => {
-              this._eventsService.toggleRSVP(this.loadedEvent.id, false);
-              this._navController.navigateBack(["/main/tabs/events"]);
+              this._eventsService
+                .cancelReservation(
+                  this._attendanceID,
+                  this._memberEmail,
+                  this._memberToken
+                )
+                .pipe(
+                  tap(() => {
+                    this._navController.navigateBack(["/main/tabs/events"]);
+                  })
+                )
+                .subscribe();
             },
           },
         ],

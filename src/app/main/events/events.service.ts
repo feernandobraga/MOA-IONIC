@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Member } from "../../auth/member.model";
 import { environment } from "../../../environments/environment";
+import { tap } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -100,4 +101,44 @@ export class EventsService {
   // set isRsvpd(value: boolean) {
   //   this._events. = value
   // }
+
+  rsvpToEvent(
+    memberEmail: string,
+    memberToken: string,
+    memberID: string,
+    eventID: string
+  ): Observable<Events> {
+    return this._http
+      .post<Events>(this.apiURL + "attendances", {
+        headers: new HttpHeaders({
+          "X-Member-Email": memberEmail,
+          "X-Member-Token": memberToken,
+        }),
+        member_id: memberID,
+        event_id: eventID,
+      })
+      .pipe(
+        tap(apiResponse => {
+          console.log("RESPONSE FROM POST API");
+
+          console.log(apiResponse);
+        })
+      );
+  }
+
+  cancelReservation(
+    reservationID: string,
+    memberEmail: string,
+    memberToken: string
+  ): Observable<any> {
+    return this._http.delete<any>(
+      this.apiURL + "attendances/" + reservationID,
+      {
+        headers: new HttpHeaders({
+          "X-Member-Email": memberEmail,
+          "X-Member-Token": memberToken,
+        }),
+      }
+    );
+  }
 }
