@@ -4,7 +4,7 @@ import { tap } from "rxjs/operators";
 import { Member } from "./member.model";
 import { MemberService } from "./member.service";
 import { Router } from "@angular/router";
-import { NavController } from "@ionic/angular";
+import { NavController, AlertController } from "@ionic/angular";
 import { environment } from "../../environments/environment";
 
 @Injectable({
@@ -14,12 +14,14 @@ export class AuthService {
   private _userIsAuthenticated = false;
   private apiURL = environment.apiURL;
   apiResponse: any;
+  private isMemberAuthorized = false;
 
   constructor(
     private _http: HttpClient,
     private _memberService: MemberService,
     private _router: Router,
-    private _navController: NavController
+    private _navController: NavController,
+    private _alertController: AlertController
   ) {}
 
   get userIsAuthenticated() {
@@ -39,10 +41,23 @@ export class AuthService {
             "Token return from API " + pipedData.authentication_token
           );
 
-          if (pipedData.authentication_token != null) {
-            this._userIsAuthenticated = true;
+          console.log("Check if user is authorized to see the content");
+          this.isMemberAuthorized = pipedData.authorized_for_app;
+          console.log(this.isMemberAuthorized);
 
+          // IF credentials are valid and user is authorized
+          if (
+            pipedData.authentication_token != null &&
+            this.isMemberAuthorized
+          ) {
+            this._userIsAuthenticated = true;
             this.createMember(pipedData);
+            this._router.navigateByUrl("/main/tabs/news");
+            //ELSE IF credentials are valid but not authorized
+          } else if (!this.isMemberAuthorized) {
+            this.displayAlert(
+              "Your account has not been approved yet, please try logging again later."
+            );
           }
         })
       );
@@ -83,11 +98,39 @@ export class AuthService {
       })
       .pipe(
         tap(resSignUp => {
-          if (resSignUp.authentication_token != null) {
+          console.log("Check if user is authorized to see the content");
+          this.isMemberAuthorized = resSignUp.authorized_for_app;
+          console.log(this.isMemberAuthorized);
+          // IF credentials are valid and user is Authorized
+          if (
+            resSignUp.authentication_token != null &&
+            this.isMemberAuthorized
+          ) {
             this._userIsAuthenticated = true;
             this.createMember(resSignUp);
+            this._router.navigateByUrl("/main/tabs/news");
+          } else if (!this.isMemberAuthorized) {
+            this.displayAlert(
+              "You have successfully created an account but your access has not been approved yet. Please try logging again later."
+            );
           }
         })
       );
+  }
+
+  displayAlert(message: string) {
+    this._alertController
+      .create({
+        header: "Awaiting Approval",
+        message: message,
+        buttons: [
+          {
+            text: "Okay",
+          },
+        ],
+      })
+      .then(alertElement => {
+        alertElement.present();
+      });
   }
 }

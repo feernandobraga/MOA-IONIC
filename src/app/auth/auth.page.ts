@@ -2,7 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { AuthService } from "./auth.service";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
-import { LoadingController } from "@ionic/angular";
+import {
+  LoadingController,
+  AlertController,
+  ToastController,
+} from "@ionic/angular";
 
 @Component({
   selector: "app-auth",
@@ -11,11 +15,14 @@ import { LoadingController } from "@ionic/angular";
 })
 export class AuthPage implements OnInit {
   isLoginMode: boolean = true;
+  authorizedForApp: boolean = false;
 
   constructor(
     private _authService: AuthService,
     private _router: Router,
-    private _loadingController: LoadingController
+    private _loadingController: LoadingController,
+    private _alertController: AlertController,
+    private _toastController: ToastController
   ) {}
 
   ngOnInit() {}
@@ -61,21 +68,65 @@ export class AuthPage implements OnInit {
     if (this.isLoginMode) {
       // if LOGIN mode: Post to API login and password
 
-      this._authService.login(email, password).subscribe(data => {
-        console.log(
-          "Data returned from login.subscribe: " + JSON.stringify(data, null, 4)
-        );
-
-        this._router.navigateByUrl("/main/tabs/news");
-      });
+      this._authService.login(email, password).subscribe(
+        data => {
+          console.log(
+            "Data returned from login.subscribe: " +
+              JSON.stringify(data, null, 4)
+          );
+          this.authorizedForApp = data.authorized_for_app;
+          // console.log("Is authorized for app? " + this.authorizedForApp);
+          form.reset();
+        },
+        errorResponse => {
+          let errorCode = errorResponse.status;
+          //Error 401: Unauthorized
+          if (errorCode === 401) {
+            this.displayToast("Invalid Credentials");
+          } else {
+            this.displayToast("Unable to login");
+          }
+        }
+      );
     } else {
       // console.log("Sign Up Mode");
       this._authService
         .signUp(membershipNumber, firstName, lastName, email, password)
-        .subscribe(data => {
-          this._router.navigateByUrl("/main/tabs/news");
-        });
+        .subscribe(
+          data => {
+            form.reset();
+            // this._router.navigateByUrl("/main/tabs/news");
+          },
+          errorResponse => {
+            let errorCode = errorResponse.status;
+            if (errorCode === 400) {
+              this.displayToast("E-mail already registered");
+            } else {
+              this.displayToast("Unable to sign up");
+            }
+            return;
+          }
+        );
     }
-    form.reset();
+
+    // if (!this.authorizedForApp) {
+    //   console.log("not authorized");
+    //   this.displayAlert();
+    //   //TODO: Display allert that user is not authorized
+    // } else {
+    //   this._router.navigateByUrl("/main/tabs/news");
+    // }
+  }
+
+  displayToast(message: string) {
+    this._toastController
+      .create({
+        message: message,
+        duration: 3000,
+        color: "danger",
+      })
+      .then(toastElement => {
+        toastElement.present();
+      });
   }
 }
