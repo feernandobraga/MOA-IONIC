@@ -75,8 +75,11 @@ export class AuthPage implements OnInit {
               JSON.stringify(data, null, 4)
           );
           this.authorizedForApp = data.authorized_for_app;
-          // console.log("Is authorized for app? " + this.authorizedForApp);
-          form.reset();
+
+          // Only resets the form if user is able to login
+          if (this.authorizedForApp) {
+            form.reset();
+          }
         },
         errorResponse => {
           let errorCode = errorResponse.status;
