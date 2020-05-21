@@ -106,7 +106,8 @@ export class EventsService {
     memberEmail: string,
     memberToken: string,
     memberID: string,
-    eventID: string
+    eventID: string,
+    time: Date
   ): Observable<Events> {
     return this._http
       .post<Events>(this.apiURL + "attendances", {
@@ -116,6 +117,7 @@ export class EventsService {
         }),
         member_id: memberID,
         event_id: eventID,
+        time: new Date(),
       })
       .pipe(
         tap(apiResponse => {

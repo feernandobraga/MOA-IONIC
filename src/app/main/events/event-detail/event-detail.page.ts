@@ -126,7 +126,8 @@ export class EventDetailPage implements OnInit {
                   this._memberEmail,
                   this._memberToken,
                   this._memberID,
-                  this._eventID
+                  this._eventID,
+                  new Date()
                 )
                 .pipe(
                   tap(resData => {
