@@ -119,7 +119,7 @@
             <ion-card-subtitle>{{ event.address }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            {{ event.description }}
+            {{ event.description | slice:0:150}}...
           </ion-card-content>
 
           

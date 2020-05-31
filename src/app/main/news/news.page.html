@@ -98,7 +98,7 @@
             <ion-card-title>{{ singleNews.title }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            {{ singleNews.description }}
+            {{ singleNews.description | slice:0:150}}...
           </ion-card-content>
 
           <div class="ion-text-right ion-margin">
