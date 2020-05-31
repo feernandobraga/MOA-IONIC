@@ -59,58 +59,69 @@ export class AuthPage implements OnInit {
       return;
     }
 
-    const membershipNumber = form.value.membershipNumber;
-    const firstName = form.value.firstName;
-    const lastName = form.value.lastName;
-    const email = form.value.email;
-    const password = form.value.password;
+    this._loadingController
+      .create({
+        keyboardClose: true,
+        message: "Loading...",
+      })
+      .then(loadingElement => {
+        loadingElement.present();
 
-    if (this.isLoginMode) {
-      // if LOGIN mode: Post to API login and password
+        const membershipNumber = form.value.membershipNumber;
+        const firstName = form.value.firstName;
+        const lastName = form.value.lastName;
+        const email = form.value.email;
+        const password = form.value.password;
 
-      this._authService.login(email, password).subscribe(
-        data => {
-          console.log(
-            "Data returned from login.subscribe: " +
-              JSON.stringify(data, null, 4)
-          );
-          this.authorizedForApp = data.authorized_for_app;
+        if (this.isLoginMode) {
+          // if LOGIN mode: Post to API login and password
 
-          // Only resets the form if user is able to login
-          if (this.authorizedForApp) {
-            form.reset();
-          }
-        },
-        errorResponse => {
-          let errorCode = errorResponse.status;
-          //Error 401: Unauthorized
-          if (errorCode === 401) {
-            this.displayToast("Invalid Credentials");
-          } else {
-            this.displayToast("Unable to login");
-          }
-        }
-      );
-    } else {
-      // console.log("Sign Up Mode");
-      this._authService
-        .signUp(membershipNumber, firstName, lastName, email, password)
-        .subscribe(
-          data => {
-            form.reset();
-            // this._router.navigateByUrl("/main/tabs/news");
-          },
-          errorResponse => {
-            let errorCode = errorResponse.status;
-            if (errorCode === 400) {
-              this.displayToast("E-mail already registered");
-            } else {
-              this.displayToast("Unable to sign up");
+          this._authService.login(email, password).subscribe(
+            data => {
+              console.log(
+                "Data returned from login.subscribe: " +
+                  JSON.stringify(data, null, 4)
+              );
+              this.authorizedForApp = data.authorized_for_app;
+
+              // Only resets the form if user is able to login
+              if (this.authorizedForApp) {
+                form.reset();
+              }
+              loadingElement.dismiss();
+            },
+            errorResponse => {
+              loadingElement.dismiss();
+              let errorCode = errorResponse.status;
+              //Error 401: Unauthorized
+              if (errorCode === 401) {
+                this.displayToast("Invalid Credentials");
+              } else {
+                this.displayToast("Unable to login");
+              }
             }
-            return;
-          }
-        );
-    }
+          );
+        } else {
+          // console.log("Sign Up Mode");
+          this._authService
+            .signUp(membershipNumber, firstName, lastName, email, password)
+            .subscribe(
+              data => {
+                form.reset();
+                // this._router.navigateByUrl("/main/tabs/news");
+              },
+              errorResponse => {
+                let errorCode = errorResponse.status;
+                if (errorCode === 400) {
+                  this.displayToast("E-mail already registered");
+                } else {
+                  this.displayToast("Unable to sign up");
+                }
+                return;
+              }
+            );
+        }
+      });
 
     // if (!this.authorizedForApp) {
     //   console.log("not authorized");
@@ -132,4 +143,6 @@ export class AuthPage implements OnInit {
         toastElement.present();
       });
   }
+
+  displayLoading() {}
 }
