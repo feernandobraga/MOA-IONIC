@@ -12,6 +12,7 @@ import { MemberService } from "src/app/auth/member.service";
 })
 export class NewsDetailPage implements OnInit {
   loadedNews: News;
+  isLoading: Boolean = true;
   private _memberEmail: string;
   private _memberToken: string;
 
@@ -40,6 +41,7 @@ export class NewsDetailPage implements OnInit {
             this._memberToken
           )
           .subscribe(data => {
+            this.isLoading = false;
             this.loadedNews = data;
           });
       });

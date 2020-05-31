@@ -108,9 +108,11 @@ export class AuthPage implements OnInit {
             .subscribe(
               data => {
                 form.reset();
+                loadingElement.dismiss();
                 // this._router.navigateByUrl("/main/tabs/news");
               },
               errorResponse => {
+                loadingElement.dismiss();
                 let errorCode = errorResponse.status;
                 if (errorCode === 400) {
                   this.displayToast("E-mail already registered");

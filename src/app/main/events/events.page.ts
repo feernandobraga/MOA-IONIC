@@ -14,6 +14,7 @@ export class EventsPage implements OnInit {
   loadedEvents: Events[];
   pastEvents: Events[];
   today = new Date();
+  isLoading: boolean = true;
   private _memberEmail: string;
   private _memberToken: string;
 
@@ -30,6 +31,7 @@ export class EventsPage implements OnInit {
         .fetchAllEvents(this._memberEmail, this._memberToken)
         .subscribe(
           eventData => {
+            this.isLoading = false;
             console.log(eventData);
             // this.loadedEvents = eventData
             this.upcomingEvents = eventData;

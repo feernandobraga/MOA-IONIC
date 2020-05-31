@@ -11,6 +11,65 @@
 
 <ion-content>
 
+
+  <!-- Skeleton loading -->
+  
+  <ion-grid *ngIf="isLoading" class="ion-no-border ion-no-margin ion-no-padding">
+
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <ion-card class="ion-no-border ion-no-margin ion-no-padding">
+          <ion-card-header color="primary" class="header-border">
+            <ion-row>
+              <ion-col size="11" offset="2">
+                <ion-card-title class="ion-text-center">
+                  <ion-skeleton-text animated class="skeleton-title"></ion-skeleton-text>
+                </ion-card-title>
+              </ion-col>
+            </ion-row>
+            
+
+            <ion-row>
+              <ion-col size="12" offset="3" class="ion-text-center">
+                <ion-card-subtitle class="ion-padding">
+                  <ion-skeleton-text animated class="skeleton-first-sub"></ion-skeleton-text>
+                </ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="">
+              <ion-col size="" class="">
+                <ion-card-subtitle class="">
+                  <ion-skeleton-text animated class="skeleton-second-sub"></ion-skeleton-text>
+                </ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
+            
+            <ion-row class="">
+              <ion-card-subtitle class="ion-text-center">
+                <ion-skeleton-text animated class="skeleton-second-sub"></ion-skeleton-text>
+              </ion-card-subtitle>
+            </ion-row>
+
+
+          </ion-card-header>
+          <ion-card-content class="ion-margin-top">
+            <ion-skeleton-text animated class="skeleton-content"></ion-skeleton-text>
+          </ion-card-content>
+
+          <div>
+            <ion-skeleton-text animated class="skeleton-full-button"></ion-skeleton-text>
+          </div>
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+  
+  <!-- End Skeleton loading -->
+  
   <ion-grid *ngIf="loadedEvent" class="ion-no-border ion-no-margin ion-no-padding">
 
     <ion-row>

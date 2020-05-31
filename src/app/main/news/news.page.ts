@@ -11,6 +11,7 @@ import { AuthService } from "../../auth/auth.service";
 })
 export class NewsPage implements OnInit {
   loadedNews: News[];
+  isLoading: Boolean = true;
   private _memberEmail: string;
   private _memberToken: string;
 
@@ -44,6 +45,7 @@ export class NewsPage implements OnInit {
         .fetchNews(this._memberEmail, this._memberToken)
         .subscribe(resNews => {
           this.loadedNews = resNews;
+          this.isLoading = false;
         });
     });
   }

@@ -15,6 +15,7 @@ export class EventDetailPage implements OnInit {
   loadedEvent: Events;
   today = new Date();
   isPastEvent: boolean = false;
+  isLoading: boolean = true;
   private _memberEmail: string;
   private _memberToken: string;
   private _memberID: string;
@@ -51,6 +52,7 @@ export class EventDetailPage implements OnInit {
           )
           .pipe(
             tap((eventData: any) => {
+              this.isLoading = false;
               this._eventID = eventData.id;
               console.log("EVENT ID: " + this._eventID);
 

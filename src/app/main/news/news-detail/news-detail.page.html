@@ -11,6 +11,43 @@
 
 <ion-content >
 
+  <!-- Skeleton Loading -->
+  <ion-grid *ngIf="isLoading" class="ion-no-border ion-no-margin ion-no-padding">
+    
+    <ion-row>
+      <ion-col size="12">
+        <ion-card class="ion-no-border ion-no-margin ion-no-padding">
+          <ion-card-header color="primary" class="header-border">
+            <ion-card-title class="ion-text-center ion-padding-bottom">
+              <ion-skeleton-text animated class="skeleton-title"></ion-skeleton-text>
+            </ion-card-title>
+            
+            <ion-row class="">
+              <ion-col size="" class="">
+                <ion-card-subtitle class="ion-padding">
+                  <ion-skeleton-text animated class="skeleton-first-sub"></ion-skeleton-text>
+                </ion-card-subtitle>
+              </ion-col>
+              <ion-col size="" class="ion-text-right">
+                <ion-card-subtitle class="ion-padding">
+                  <ion-skeleton-text animated class="skeleton-second-sub"></ion-skeleton-text>
+                </ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
+          </ion-card-header>
+          <ion-card-content class="ion-margin-top">
+            <ion-skeleton-text animated class="skeleton-content"></ion-skeleton-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>  
+    </ion-row>
+
+  </ion-grid>
+  <!-- End Skeleton Loading -->
+
+
+
   <ion-grid *ngIf="loadedNews" class="ion-no-border ion-no-margin ion-no-padding">
     
     <ion-row>
