@@ -3,6 +3,8 @@ import { EventsService } from "./events.service";
 import { Events } from "./events.model";
 import { SegmentChangeEventDetail } from "@ionic/core";
 import { MemberService } from "../../auth/member.service";
+import { stringify } from "@angular/compiler/src/util";
+import { element } from "protractor";
 
 @Component({
   selector: "app-events",
@@ -17,28 +19,66 @@ export class EventsPage implements OnInit {
   isLoading: boolean = true;
   private _memberEmail: string;
   private _memberToken: string;
+  private _memberID: string;
+  private _attendees: [];
 
   constructor(
     private _eventsService: EventsService,
     private _memberService: MemberService
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter() {
     this._memberService.retrieveMemberData().then(resMember => {
       this._memberEmail = resMember._email;
       this._memberToken = resMember._authenticationToken;
+      this._memberID = resMember.id;
       this._eventsService
         .fetchAllEvents(this._memberEmail, this._memberToken)
         .subscribe(
-          eventData => {
+          (eventData: any) => {
             this.isLoading = false;
             console.log(eventData);
             // this.loadedEvents = eventData
             this.upcomingEvents = eventData;
             this.pastEvents = eventData;
             this.filterUpcoming();
+            console.log("FINDING ATTENDEEESSSS");
+            // console.log(this.upcomingEvents[0].attendees);
+            for (let singleEvent of this.upcomingEvents) {
+              // console.log("inside the loop");
+              // let found: any = evt.attendees.filter(
+              //   (element: any) => (element: any) =>
+              //     element.member_id === this._memberID
+              // );
+
+              // let attendee: any = evt.attendees.filter(
+              //   (element: any) => element.member_id === this._memberID
+              // );
+
+              // for (let singleAttendee of singleEvent.attendees) {
+              //   console.log(JSON.stringify(singleAttendee.id));
+              // }
+
+              singleEvent.attendees.forEach((whatever: any) => {
+                if (whatever.member_id === this._memberID) {
+                  console.log("FUCKYEAH!!");
+                  singleEvent.isRsvpd = true;
+                } else {
+                  singleEvent.isRsvpd = false;
+                }
+              });
+
+              // console.log(JSON.stringify(evt.attendees[0].member_id));
+
+              // evt.attendees.filter
+              // console.log(stringify(evt.attendees));
+              // console.log("IS FOUND??? " + found);
+            }
           },
           err => {
+            this.isLoading = false;
             console.log("Something went wrong when fetching events");
           }
         );

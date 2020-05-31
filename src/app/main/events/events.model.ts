@@ -10,7 +10,8 @@ export class Events {
     public event_date_and_time: Date,
     public description: string,
     public created_at: Date,
-    public isRsvpd?: boolean
+    public isRsvpd?: boolean,
+    public attendees?: []
   ) {}
 }
 

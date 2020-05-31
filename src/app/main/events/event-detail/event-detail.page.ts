@@ -33,7 +33,9 @@ export class EventDetailPage implements OnInit {
     private _memberService: MemberService
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter() {
     this._activatedRouter.paramMap.subscribe(paramMap => {
       if (!paramMap.has("eventId")) {
         this._navController.navigateBack("/main/tabs/events");
@@ -162,7 +164,7 @@ export class EventDetailPage implements OnInit {
 
   // }
 
-  cancelRsvp() {
+  cancelRsvp(eventID?: string) {
     this._alertController
       .create({
         header: "Reservation Cancelled!",

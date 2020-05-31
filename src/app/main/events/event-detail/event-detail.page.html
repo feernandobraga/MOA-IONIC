@@ -117,7 +117,7 @@
               RSVP!
             </ion-button>
   
-            <ion-button *ngIf="(isAlreadyAttending)" class="ion-margin-top" color="danger" expand="full" (click)="cancelRsvp()">
+            <ion-button *ngIf="(isAlreadyAttending)" class="ion-margin-top" color="danger" expand="full" (click)="cancelRsvp(loadedEvent.id)">
               <ion-icon slot="start" name="close-circle-outline"></ion-icon>
               Cancel Reservation
             </ion-button>
