@@ -21,6 +21,7 @@ export class EventsPage implements OnInit {
   private _memberToken: string;
   private _memberID: string;
   private _attendees: [];
+  asd: string;
 
   constructor(
     private _eventsService: EventsService,
@@ -30,6 +31,7 @@ export class EventsPage implements OnInit {
   ngOnInit() {}
 
   ionViewWillEnter() {
+    this.asd = "upcomingEvents";
     this._memberService.retrieveMemberData().then(resMember => {
       this._memberEmail = resMember._email;
       this._memberToken = resMember._authenticationToken;

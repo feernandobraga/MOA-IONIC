@@ -25,7 +25,7 @@
                 The ion-segment has also a value property which will indicate which menu will be active by default
                 The component also implements an ionic-native-event (ionChange) that handles the change and passes an event through
               -->
-        <ion-segment value="upcomingEvents" (ionChange)="onFilterUpdate($event)" background="primary" mode="ios">
+        <ion-segment value="upcomingEvents" (ionChange)="onFilterUpdate($event)" background="primary" mode="ios" [(ngModel)]="asd">
           <ion-segment-button value="upcomingEvents">Upcoming Events</ion-segment-button>
           <ion-segment-button value="pastEvents">Past Events</ion-segment-button>
         </ion-segment>
