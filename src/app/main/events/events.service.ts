@@ -108,17 +108,22 @@ export class EventsService {
     memberID: string,
     eventID: string,
     time: Date
-  ): Observable<Events> {
+  ): Observable<any> {
     return this._http
-      .post<Events>(this.apiURL + "attendances", {
-        headers: new HttpHeaders({
-          "X-Member-Email": memberEmail,
-          "X-Member-Token": memberToken,
-        }),
-        member_id: memberID,
-        event_id: eventID,
-        time: new Date(),
-      })
+      .post<any>(
+        this.apiURL + "attendances",
+        {
+          member_id: memberID,
+          event_id: eventID,
+          time: new Date(),
+        },
+        {
+          headers: new HttpHeaders({
+            "X-Member-Email": memberEmail,
+            "X-Member-Token": memberToken,
+          }),
+        }
+      )
       .pipe(
         tap(apiResponse => {
           console.log("RESPONSE FROM POST API");
